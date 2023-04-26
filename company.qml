@@ -8,5 +8,5 @@ Window {
     height: 480
     visible: true
     color: "#4963be"
-    title: qsTr("Fgpass")
+    title: qsTr("company")
 }

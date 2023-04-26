@@ -4,11 +4,14 @@ import QtQuick.Controls 6.3
 import QtQuick.Layouts 6.3
 
 Window {
+    id: mainWindow
     width: 640
     height: 480
     visible: true
-    color: "#61d8a8"
+    color: "#4963be"
     title: qsTr("Auth")
+
+    property string email: ""
 
     Button {
         id: button
@@ -17,6 +20,28 @@ Window {
         width: 118
         height: 34
         text: qsTr("Войти")
+        onClicked: {
+                var component = Qt.createComponent("menu.qml");
+                if (component.status === Component.Ready) {
+                    var menuWindow = component.createObject(mainWindow, {"userEmail": email});
+                    if (menuWindow) {
+                        menuWindow.show();
+                        mainWindow.visible = false;
+                    } else {
+                        console.error("Ошибка создания menuWindow:", component.errorString());
+                    }
+                } else {
+                    console.error("Ошибка создания компонента menu.qml:", component.errorString());
+                }
+            }
+        /*onClicked: {
+                    var component = Qt.createComponent("menu.qml");
+                    var menuWindow = component.createObject(null);
+                    //var menuWindow = component.createObject(mainWindow);
+                    menuWindow.show();
+                    menuWindow.login = email;
+                    mainWindow.visible = false;
+                }*/
     }
 
     TextField {
@@ -26,6 +51,9 @@ Window {
         width: 143
         height: 22
         placeholderText: qsTr("Эл. почта")
+        onTextChanged: {
+               email = text
+           }
     }
 
     TextField {
@@ -57,10 +85,11 @@ Window {
 
     TextInput {
         id: textInput
-        x: 353
+        x: 343
         y: 302
         width: 80
         height: 20
+        color: "#93a9f4"
         text: qsTr("Еще не с нами? Зарегистрироваться")
         font.pixelSize: 12
         font.underline: true

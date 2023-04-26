@@ -7,7 +7,7 @@ Window {
     width: 640
     height: 480
     visible: true
-    color: "#61d8a8"
+    color: "#4963be"
     title: qsTr("Registration")
 
     TextField {
